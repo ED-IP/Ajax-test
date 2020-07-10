@@ -25,6 +25,7 @@ function getTableHeaders(obj) {
 }
 
 function writeToDocument(type) {
+    var tableRows = [];
     var el = document.getElementById("data");
     el.innerHTML ="";
 
@@ -34,10 +35,16 @@ function writeToDocument(type) {
         var tableHeaders = getTableHeaders(data[0]);
 
         data.forEach(function(item){
+            var dataRow = [];
             
-            // el.innerHTML += "<p>" + item.name + "</p>";
+            Object.keys(item).forEach(function(key) {
+                var rowData = item[key].toString();
+                var truncatedData = rowData.substring(0, 15);
+                dataRow.push(`<table>${truncatedData}</table>`)
+            });
+            tableRows.push(`<td>${dataRow}</td>`);
         });
         
-        el.innerHTML = `<table>${tableHeaders}</table>`;
+        el.innerHTML = `<table>${tableHeaders}${tableRows}</table>`;
     });
 }
